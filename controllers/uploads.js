@@ -39,8 +39,9 @@ const actualizarImagen = async( req, res = response ) => {
     // Si el articulo tiene una propiedad img tiene imagen
     if( articulo.img ) {
         // Construye el path de esa img
-        const pathImg = path.join( __dirname, '../uploads/articulos', articulo.img );
+        const pathImg = path.join( articulo.img );
         // Si existe ese archivo (fileSystem)
+
         if( fs.existsSync( pathImg ) ) {
             fs.unlinkSync(pathImg); // Borra el archivo que este en la ruta
         }

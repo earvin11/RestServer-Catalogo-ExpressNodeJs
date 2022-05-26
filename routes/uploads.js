@@ -14,13 +14,11 @@ const { validarJWT, validarCampos, validarArchivo } = require('../middlewares');
 const router = Router();
 
 router.post('/',[
-    validarJWT,
     validarArchivo,
     validarCampos
 ],cargarArchivo );
 
 router.put('/articulos/:id',[
-    validarJWT,
     validarArchivo,
     check('id', 'No es un id valido').isMongoId(),
     validarCampos

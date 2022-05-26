@@ -23,8 +23,15 @@ const ArticuloSchema = Schema({
     img: {
         type: String
     },
-
-
+    creado: { //Pare recibir el usuario que esta creando
+        type: Schema.Types.ObjectId, 
+        ref: 'Usuario', //del Schema usuario
+        required: true
+    },
+    modificado: {
+        type: Schema.Types.ObjectId, 
+        ref: 'Usuario', 
+    }
 });
 
 // Modificar el metodo toJSON

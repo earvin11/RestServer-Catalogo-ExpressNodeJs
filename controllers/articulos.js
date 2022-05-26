@@ -10,6 +10,8 @@ const obtenerArticulos = async( req, res ) =>{
         Articulo.countDocuments({ estado: true }),
         Articulo.find({ estado: true }) // Almacena en la const articulos lo que haya en el model Articulo que este en estado true
             .populate('categoria', 'nombre')
+            .populate('creado', 'nombre')
+            .populate('modificado', 'nombre')
             .skip(Number(desde))
             .limit(Number(limite))  // Number() transforma en numero lo que este dentro de los parentesis
     ]);
@@ -27,7 +29,10 @@ const obtenerArticulo = async( req, res ) =>{
     const { id } = req.params;
 
     // // Busca en el modelo articulo un objeto con ese id con el metodo findById
-    const articulo = await Articulo.findById( id ).populate('categoria', 'nombre');
+    const articulo = await Articulo.findById( id )
+                            .populate('categoria', 'nombre')
+                            .populate('creado', 'nombre')
+                            .populate('modificado', 'nombre');
 
     res.status(200).json(articulo);
 }
@@ -39,11 +44,14 @@ const guardarArticulo = async( req, res ) =>{
 
     const nombre = req.body.nombre.toUpperCase();
 
+    const creado = req.usuario._id;
+
     // Almacena esos valores en un objeto data
     const data = {
         nombre,
         descripcion,
-        categoria
+        categoria,
+        creado
     }
 
     // Crea un nueva instancia de Articulo enviando la data
@@ -66,7 +74,9 @@ const actualizarArticulo = async( req, res ) =>{
     const { id } = req.params;
 
     // Extrae los valores que vengan del body
-    const { categoria, descripcion } = req.body;
+    const {  categoria, descripcion } = req.body;
+
+    const modificado = req.usuario._id;
 
     const nombre = req.body.nombre.toUpperCase();
 
@@ -74,7 +84,8 @@ const actualizarArticulo = async( req, res ) =>{
     const data = {
         nombre,
         categoria,
-        descripcion
+        descripcion,
+        modificado
     }
 
     // Metodo findByIaAndUpdate para buscar por id y actualizar los datos de ese objeto enviando los nuevos datos que estan en el objeto data
