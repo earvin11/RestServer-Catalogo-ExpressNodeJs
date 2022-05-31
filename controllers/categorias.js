@@ -47,11 +47,18 @@ const crearCategoria = async( req, res ) => {
 
     const categoria = new Categoria({ nombre });
 
-    await categoria.save();
-
-    res.status(201).json(categoria);
-
-
+    try {
+        await categoria.save();
+    
+        res.status(201).json(categoria);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 
 }
 
@@ -63,9 +70,19 @@ const actualizarCategoria = async( req, res ) => {
 
     data.nombre = data.nombre.toUpperCase();
 
-    const categoria = await Categoria.findByIdAndUpdate( id, data, {new: true});
+    try {
+        const categoria = await Categoria.findByIdAndUpdate( id, data, {new: true});
+    
+        res.status(200).json(categoria);
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 
-    res.status(200).json(categoria);
 
 }
 
@@ -73,9 +90,18 @@ const borrarCategoria = async( req, res ) => {
 
     const { id } = req.params;
 
-    const categoria = await Categoria.findByIdAndUpdate( id, { estado:false} );
-
-    res.status(200).json( categoria );
+    try {
+        const categoria = await Categoria.findByIdAndUpdate( id, { estado:false} );
+    
+        res.status(200).json( categoria );
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        });
+    }
 }
 
 

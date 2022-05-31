@@ -15,7 +15,7 @@ const esAdminRole = ( req, res, next ) => {
     if( rol !== 'ADMIN_ROLE' ) {
         return res.status(401).json({
             ok: false,
-            msg: `${ nombre }, no tienes permiso para ejecutar esta acción`
+            msg: `Lo siento ${ nombre }, no tienes permiso para ejecutar esta acción`
         });
     }
 

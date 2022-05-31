@@ -2,7 +2,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 
-const subirArchivo = ( files, extensionesValidas = ['png', 'jpg', 'jpeg', 'gif'], carpeta ='' ) => {
+const subirArchivo = ( files, extensionesValidas = ['png', 'jpg', 'jpeg', 'gif', 'webp'], carpeta ='' ) => {
 
     return new Promise( ( resolve, reject ) => {
 
@@ -23,7 +23,9 @@ const subirArchivo = ( files, extensionesValidas = ['png', 'jpg', 'jpeg', 'gif']
      const nombreTemp = uuidv4() + '.' + extension;
  
      // Constryle el path para la img
-     uploadPath = path.join( __dirname, '../uploads/', carpeta ,nombreTemp );
+    //  uploadPath = path.join( __dirname, '../uploads/', carpeta ,nombreTemp );
+
+    uploadPath = path.join('E:', '/Catalogo', carpeta, nombreTemp );
  
      // Utiliza mv para mover el archivo al primer argumento que es la ruta destino
      // Segundo argumento un callback por si hay un error

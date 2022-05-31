@@ -53,6 +53,66 @@ const crearUsuario = async( req, res ) => {
             msg: 'Hable con el administrador'
         });
     }
+}
+
+const putPasswordUser = async( req, res ) => {
+
+    const idUser = req.usuario._id;
+
+    let { password } = req.body;
+
+    // Encriptar contraseña
+    const salt = bcryptjs.genSaltSync(); 
+
+    password = bcryptjs.hashSync( password, salt );
+
+    try {
+
+        const usuario = await Usuario.findByIdAndUpdate( idUser, { password }, { new: true });
+
+        res.status(200).json({
+            ok: true,
+            msg: 'La contraseña ha sido actualizada',
+            usuario
+        });
+        
+    } catch (error) {
+        console.log(error)
+
+        res.status(500).json({
+            ok: false,
+            msg: 'Hable con el administrador'
+        })
+    }
+
+}
+
+const updatePasswordOlvidada = async( req, res ) => {
+
+    const { id } = req.body;
+
+    let { password } = req.body;
+
+    // Encriptar contraseña
+    const salt = bcryptjs.genSaltSync(); 
+
+    password = bcryptjs.hashSync( password, salt );
+
+    try {
+
+        const usuario = await Usuario.findByIdAndUpdate(id, { password }, {new: true});
+        
+        res.status(200).json({
+            ok: true,
+            usuario
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            ok: false,
+        });
+    }
 
 
 }
@@ -60,5 +120,7 @@ const crearUsuario = async( req, res ) => {
 
 module.exports = {
     crearUsuario,
-    getUsuarios
+    getUsuarios,
+    putPasswordUser,
+    updatePasswordOlvidada
 }

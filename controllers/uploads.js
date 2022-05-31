@@ -47,15 +47,27 @@ const actualizarImagen = async( req, res = response ) => {
         }
     }
 
-    const nombre = await subirArchivo( req.files, undefined, 'articulos' );
-    articulo.img = nombre;
+    try {
+        const nombre = await subirArchivo( req.files, undefined, 'articulos' );
 
-    await articulo.save();
+        articulo.img = nombre;
 
-    res.json({
-        ok: true,
-        articulo 
-    });
+        await articulo.save();
+    
+        res.json({
+            ok: true,
+            articulo 
+        });
+
+    } catch (error) {
+
+        console.log(error)
+
+        res.status(500).json({
+            ok: false,
+            msg: error
+        })
+    }
 
 }
 

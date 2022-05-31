@@ -1,8 +1,11 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
-// const {  } = require('../controllers/articulos');
-const { crearUsuario, getUsuarios } = require('../controllers/usuarios');
+const { crearUsuario, 
+        getUsuarios, 
+        putPasswordUser, 
+        updatePasswordOlvidada } = require('../controllers/usuarios');
+
 const { validarJWT,
         validarCampos, 
         esAdminRole } = require('../middlewares');
@@ -27,7 +30,12 @@ router.post('/',[
     validarCampos
 ],crearUsuario );
 
-router.put('/:id', );
+router.put('/',[
+    validarJWT,
+    validarCampos
+],putPasswordUser );
+
+router.put('/password', updatePasswordOlvidada );
 
 router.delete('/:id', );
 
