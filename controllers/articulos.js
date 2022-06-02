@@ -61,7 +61,17 @@ const guardarArticulo = async( req, res ) =>{
     // Extrae lo que venga en nombre y descripcion del body
     const { descripcion, categoria } = req.body;
 
-    const nombre = req.body.nombre.toUpperCase();
+    // Convierte a mayusculas el nombre, elimina espacios al principio y al final de la cadena de text
+    const nombre = req.body.nombre.toUpperCase().trimStart().trimEnd();
+
+    const existeNombre = await Articulo.findOne({ nombre });
+
+    if( existeNombre ) {
+        return res.status(400).json({
+            ok: false,
+            msg: 'Ya existe este número de lote en la base de datos'
+        });
+    }
 
     const creado = req.usuario._id;
 
@@ -144,8 +154,8 @@ const borrarArticulo = async( req, res ) =>{
     
     try {
 
-        const articulo = await Articulo.findByIdAndUpdate( id, { estado: false }, { new: true } );
-        //const articulo = await Articulo.findByIdAndDelete( id );
+        // const articulo = await Articulo.findByIdAndUpdate( id, { estado: false }, { new: true } );
+        const articulo = await Articulo.findByIdAndDelete( id );
         
         res.status(200).json({
             ok: true,

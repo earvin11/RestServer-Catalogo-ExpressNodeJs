@@ -23,6 +23,9 @@ const ArticuloSchema = Schema({
     img: {
         type: String
     },
+    lote: {
+        type: String
+    },
     creado: { //Pare recibir el usuario que esta creando
         type: Schema.Types.ObjectId, 
         ref: 'Usuario', //del Schema usuario
